@@ -136,7 +136,7 @@ def future_prediction(df):
         for t in range(0, 4):
             model = ARIMA(history, order=(2, 2, 0))
             model_fit = model.fit()
-            yhat = model_fit.forecast()[0]
+            yhat = model_fit.forecast(steps=4)[0]
             #predictions[f'{county}'].append(yhat)
             prediction.append(round(yhat))
             #print(f"Last value of Dataset : {history[-1]}")
@@ -157,8 +157,8 @@ def main():
     df_clean = clean_data(df)
     # order=hyper_testing(df_clean)
     # arima_analysis(df_clean, order)
-    arima_analysis(df_clean,(2,2,0))
-    #future_prediction(df_clean)
+    #arima_analysis(df_clean,(2,2,0))
+    future_prediction(df_clean)
 
 
 if __name__ == "__main__":
