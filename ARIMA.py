@@ -68,7 +68,8 @@ def arima_analysis(series, arima_order):
         # evaluate forecasts
         MSE = mean_squared_error(test, predictions)
         RMSE = sqrt(MSE)
-        print(f'Test MSE & RMSE for county {county}:{MSE:.3f} , {RMSE :.3f}')
+        #print(f'Test MSE & RMSE for county {county}:{MSE:.3f} , {RMSE :.3f}')
+        print(f'For county {county} : MSE -> {MSE:.3f} RMSE-> {RMSE:.3f}')
         # plot forecasts against actual outcomes
         axs[i - 1, j - 1].set_title(f"{county}", fontsize=8)
         axs[i - 1, j - 1].plot(test, label="Expected Value")
@@ -156,8 +157,8 @@ def main():
     df_clean = clean_data(df)
     # order=hyper_testing(df_clean)
     # arima_analysis(df_clean, order)
-    # arima_analysis(df_clean,(2,2,0))
-    future_prediction(df_clean)
+    arima_analysis(df_clean,(2,2,0))
+    #future_prediction(df_clean)
 
 
 if __name__ == "__main__":
