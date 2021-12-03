@@ -90,7 +90,7 @@ def arima_analysis(series, arima_order):
 
 
 def hyper_testing(df_clean):
-    warnings.filterwarnings("ignore")
+    #warnings.filterwarnings("ignore")
     p_values = range(0, 10)
     q_values = range(0, 3)
     d_values = range(0, 3)
@@ -155,10 +155,10 @@ def future_prediction(df):
 def main():
     df = read_file()
     df_clean = clean_data(df)
-    # order=hyper_testing(df_clean)
+    order=hyper_testing(df_clean)
     # arima_analysis(df_clean, order)
     #arima_analysis(df_clean,(2,2,0))
-    future_prediction(df_clean)
+    #future_prediction(df_clean)
 
 
 if __name__ == "__main__":
