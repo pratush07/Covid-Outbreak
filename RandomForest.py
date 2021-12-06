@@ -140,14 +140,16 @@ def walk_forward_validation(data, n_test, n_est):
     for i in range(len(test)):
         # split test row into input and output columns
         testX, testy = test[i, :-1], test[i, -1]
+        
         # fit model on history and make a prediction
         yhat = random_forest_forecast(history, testX, n_est)
+        
         # store forecast in list of predictions
         predictions.append(yhat)
+        
         # add actual observation to history for the next loop
         history.append(test[i])
-        # summarize progress
-        # print('>expected=%.1f, predicted=%.1f' % (testy, yhat))
+
     
     # estimate prediction error
     error = mean_absolute_error(test[:, -1], predictions)
