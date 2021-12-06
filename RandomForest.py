@@ -155,49 +155,39 @@ def walk_forward_validation(data, n_test, n_est):
     return error,rmse, test[:, -1], predictions
 
 
-# In[ ]:
+# In[10]:
 
 
 # hyperparameter selection for number of last weeks input
-def hyperparam():
-    last_week_range = [* range(2, 12)]
-    weeks_test = 12
+last_week_range = [* range(2, 12)]
+weeks_test = 12
 
-    figure = plt.gcf()
-    figure.set_size_inches(20, 20)
-    figure.suptitle('Cases', fontsize=18)
-    plt.rcParams['figure.constrained_layout.use'] = False
+figure = plt.gcf()
+figure.set_size_inches(20, 20)
+figure.suptitle('Cases', fontsize=18)
+plt.rcParams['figure.constrained_layout.use'] = False
 
-        rmse_county_map = {}
+counties = ['Dublin_diff_1', 'Galway_diff_1', 'Cork_diff_1']
 
-        for idx, county in enumerate(counties_order_1):
-            rmse_list = []
-            for last_week in last_week_range:
-                data = series_to_supervised(df_cases[[county]].values, n_in=last_week)
-                mae,rmse, y, yhat = walk_forward_validation(data, weeks_test, n_est=2000)
-                rmse_list.append(rmse)
+for idx, county in enumerate(counties):
+    rmse_list = []
+    for last_week in last_week_range:
+        data = series_to_supervised(df_cases[[county]].values, n_in=last_week)
+        mae,rmse, y, yhat = walk_forward_validation(data, weeks_test, n_est=2000)
+        rmse_list.append(rmse)
 
-            min_rmse = min(rmse_list)
-            min_week = last_week_range[rmse_list.index(min_rmse)]
+    min_rmse = min(rmse_list)
+    min_week = last_week_range[rmse_list.index(min_rmse)]
 
-            rmse_county_map[county] = (min_rmse, min_week)
-
-            ax = figure.add_subplot(8, 4, idx+1)
-            plt.title("County %s (RMSE vs Last Week)" % (county.split('_')[0]), fontsize=13)
-            plt.subplots_adjust(wspace = 0.3, hspace= 0.8)
-            ax.plot(last_week_range, rmse_list)
-            ax.plot(min_week,min_rmse,'ro')
-            ax.set_xlabel('Week'); ax.set_ylabel('RMSE')
+    ax = figure.add_subplot(8, 4, idx+1)
+    plt.title("County %s (RMSE vs Last Week)" % (county.split('_')[0]), fontsize=13)
+    plt.subplots_adjust(wspace = 0.3, hspace= 0.8)
+    ax.plot(last_week_range, rmse_list)
+    ax.plot(min_week,min_rmse,'ro')
+    ax.set_xlabel('Week'); ax.set_ylabel('RMSE')
 
 
-        plt.savefig('order_1_counties_rmse', dpi=300, bbox_inches="tight")
-
-
-# In[ ]:
-
-
-# the code takes a lot of time to run.. so commenting it.
-# hyperparam()
+plt.savefig('order_1_counties_rmse', dpi=300, bbox_inches="tight")
 
 
 # In[197]:
